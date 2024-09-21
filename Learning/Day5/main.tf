@@ -91,6 +91,7 @@ resource "aws_instance" "terra-instance-1" {
     Name = "terra-instance-1"
   }
 
+#ssh into instance using the ssh key stored in local disk
   connection {
     type = "ssh"
     user = "ubuntu"
