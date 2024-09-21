@@ -3,11 +3,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# resource "tls_private_key" "my_key" {
-#   algorithm = "RSA"
-#   rsa_bits  = 2048
-# }
-
 resource "aws_key_pair" "terra_pub_ubun" {
   key_name   = "terra-pub-ubun"
   public_key = file("~/.ssh/id_rsa.pub")  # Replace with the path to your public key file
