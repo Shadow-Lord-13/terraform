@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 resource "aws_key_pair" "terra_jenkins_pub_ubun" {
-  key_name   = "terra_jenkins-pub-ubun"
+  key_name   = "terra-jenkins-pub-ubun"
   public_key = file("~/.ssh/id_rsa.pub")  # Replace with the path to your public key file
 }
 
@@ -22,10 +22,10 @@ resource "aws_security_group" "terra_jenkins_sg" {
   }
 
   ingress {
-    description = "Allow access through port 8080 into instance"
-    from_port = 8080
-    to_port = 8080
-    protocol = "tcp"
+    description = "Allow access through all port into instance"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 

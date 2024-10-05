@@ -15,6 +15,11 @@ Verify Java is Installed
     java -version
 '''
 
+Install Docker:
+'''
+    sudo apt install docker.io
+'''
+
 Now, you can proceed with installing Jenkins
 
 '''
@@ -23,16 +28,15 @@ Now, you can proceed with installing Jenkins
     echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
     https://pkg.jenkins.io/debian binary/ | sudo tee \
     /etc/apt/sources.list.d/jenkins.list > /dev/null
+
     sudo apt-get update
     sudo apt-get install jenkins
 '''
 
-Install jenkins
+Note: use sudo cat var/.... to get the inital admin password
 
-Install Docker:
-'''
-    sudo apt install docker.io
-'''
+
+Install "docker pipeline" plugin in jenkins.
 
 Grant Jenkins user and Ubuntu user permission to docker deamon.
 '''
@@ -46,10 +50,15 @@ Give jenkins and ubuntu user permission for docker deamon.
     systemctl restart docker
 '''
 
+Check if the user has access to docker deamon
+'''
+    sudo su - jenkins
+    docker run hello-world
+'''
+
 Once you are done with the above steps, it is better to restart Jenkins.
 '''
     http://<ec2-instance-public-ip>:8080/restart
 '''
 
-Install docker pipeline plugin in jenkins.
 
