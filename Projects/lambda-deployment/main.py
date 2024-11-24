@@ -12,8 +12,15 @@ def lambda_handler(event, context):
 
         # Example: List S3 buckets
         s3 = boto3.client('s3')
-        buckets = s3.list_buckets()
-        logger.info("S3 Buckets: %s", buckets['Buckets'])
+
+        bucket_name = event['Record'][0]['s3']['bucket']['name']
+        response = s3.list_objects_v2(Bucket=bucket_name)
+
+        if ['Content'] in response:
+            print("Objects in bucket:")
+            for obj in response:
+                print(f" - {obj['key']} (Size: {obj['Size']} bytes)")
+
 
         return {
             "statusCode": 200,

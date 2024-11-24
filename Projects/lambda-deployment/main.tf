@@ -43,7 +43,7 @@ resource "aws_iam_policy" "lambda_policy" {
           "s3:PutObject"
         ],
         Resource = [
-          "arn:aws:s3:::file-processing-bucket-12345*", # Replace with specific bucket ARN if required
+          "arn:aws:s3:::file-processing-bucket*", # Replace with specific bucket ARN if required
         ]
       }
     ]
