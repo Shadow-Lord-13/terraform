@@ -13,7 +13,7 @@ def lambda_handler(event, context):
         # Example: List S3 buckets
         s3 = boto3.client('s3')
 
-        bucket_name = event['Record'][0]['s3']['bucket']['name']
+        bucket_name = event['Records'][0]['s3']['bucket']['name']
         response = s3.list_objects_v2(Bucket=bucket_name)
 
         if ['Content'] in response:
