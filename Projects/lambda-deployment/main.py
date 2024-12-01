@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-def lambda_handler(event, context):
+def lambda_handler(event):
     try:
         
         logger.info("Lambda function triggered with event: %s", event)
@@ -14,17 +14,13 @@ def lambda_handler(event, context):
         s3 = boto3.client('s3')
 
         bucket_name = event['Records'][0]['s3']['bucket']['name']
+        logger.info("Listing objects in bucket: %s", bucket_name)
         response = s3.list_objects_v2(Bucket=bucket_name)
 
         if ['Content'] in response:
-            print("Objects in bucket:")
+            logger.info("Objects in bucket:")
             for obj in response:
-                print(f" - {obj['key']} (Size: {obj['Size']} bytes)")
+                logger.info("Object: %s, Size: %d bytes", obj['Key'], obj['Size'])
 
-
-        return {
-            "statusCode": 200,
-            "body": "Lambda executed successfully!"
-        }
     except Exception as e:
-        print(f"Error: {e}")
+        logger.error("Error while list the objects in the bukcet: %s", e)
