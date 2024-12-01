@@ -15,7 +15,12 @@ def lambda_handler(event,context):
 
         # Example: List S3 buckets
         
-        bucket_name = event['Records'][0]['s3']['bucket']['name']
+        #bucket_name = event['Records'][0]['s3']['bucket']['name']
+        # Extract bucket name safely from the event
+        bucket_name = event.get('Records', [{}])[0].get('s3', {}).get('bucket', {}).get('name')
+        if not bucket_name:
+            raise ValueError("Bucket name is missing in the event.")
+        
         logger.info("Listing objects in bucket: %s", bucket_name)
         response = s3.list_objects_v2(Bucket=bucket_name)
 
@@ -25,6 +30,10 @@ def lambda_handler(event,context):
         else:
             logger.info("No objects found in the bucket.")
 
-        return "Lambda execution end!"
+        return {
+            "statusCode": 200,
+            "body": "Lambda execution ended successfully!"
+        }
+    
     except Exception as e:
-        logger.error("Error while list the objects in the bucket: %s", e)
+        logger.error("Error while listing objects in the bucket: %s", e)
